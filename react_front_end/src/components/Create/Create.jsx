@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 export default class Create extends Component {
   constructor(props) {
     super(props);
@@ -46,6 +46,24 @@ export default class Create extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+    const obj = {
+      BidNumber: this.state.bid_name,
+      OrganizationName: this.state.organization_name,
+      UserName: this.state.user_name,
+      UserPosition: this.state.user_position,
+      Email: this.state.e_mail
+    };
+    axios
+      .post('http://localhost:1623/api/bids', obj)
+      .then(res => console.log(res.data));
+
+    this.setState({
+      bid_name: '',
+      organization_name: '',
+      user_name: '',
+      user_position: '',
+      e_mail: ''
+    });
     console.log('submit');
   }
   render() {
