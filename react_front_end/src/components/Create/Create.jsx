@@ -119,7 +119,7 @@ export default class Create extends Component {
           <div className="form-group">
             <input
               type="submit"
-              value="Добавить заявку"
+              value="Отправить"
               className="btn btn-primary"
             />
           </div>
