@@ -8,7 +8,7 @@ export default class Index extends Component {
   }
   fetchData() {
     axios
-      .get('http://localhost:1623/api/bids')
+      .get(this.props.serverUrl)
       .then(response => {
         console.log('Fetch data: ', response.data);
         this.setState({ bids: response.data });
@@ -28,7 +28,14 @@ export default class Index extends Component {
   tabRow(delCallback) {
     return this.state.bids.map((bid, i) => {
       bid.BidDate = new Date(bid.BidDate).toLocaleDateString();
-      return <TableRow delete={delCallback.bind(this)} bid={bid} key={i} />;
+      return (
+        <TableRow
+          serverUrl={this.props.serverUrl}
+          delete={delCallback.bind(this)}
+          bid={bid}
+          key={i}
+        />
+      );
     });
   }
 
@@ -45,7 +52,7 @@ export default class Index extends Component {
               <th>ФИО пользователя</th>
               <th>Должность</th>
               <th>E-Mail</th>
-              <th colSpan="2">Action</th>
+              <th colSpan="2"></th>
             </tr>
           </thead>
           <tbody>{this.tabRow(this.delete)}</tbody>

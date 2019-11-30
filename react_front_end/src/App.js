@@ -7,6 +7,7 @@ import Edit from './components/Edit/Edit';
 import Index from './components/Index/Index';
 
 function App(props) {
+  let serverUrl = props.serverUrl;
   return (
     <Router>
       <div className="container">
@@ -30,10 +31,23 @@ function App(props) {
           </div>
         </nav>
         <Switch>
-          <Route exact path="/create" render={props => <Create {...props} />} />
-          <Route path="/edit/:id" render={props => <Edit {...props} />} />
-          <Route path="/index" render={props => <Index {...props} />} />
-          <Route path="/" render={props => <Index {...props} />} />
+          <Route
+            exact
+            path="/create"
+            render={props => <Create serverUrl={serverUrl} {...props} />}
+          />
+          <Route
+            path="/edit/:id"
+            render={props => <Edit serverUrl={serverUrl} {...props} />}
+          />
+          <Route
+            path="/index"
+            render={props => <Index serverUrl={serverUrl} {...props} />}
+          />
+          <Route
+            path="/"
+            render={props => <Index serverUrl={serverUrl} {...props} />}
+          />
         </Switch>
       </div>
     </Router>

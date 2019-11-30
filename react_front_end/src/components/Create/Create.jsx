@@ -9,7 +9,7 @@ export default class Create extends Component {
         history={this.props.history}
         HeaderText="Новая заявка"
         ServerActionCallback={data => {
-          axios.post('http://localhost:1623/api/bids', data).then(res => {
+          axios.post(this.props.serverUrl, data).then(res => {
             console.log(res.data);
             this.props.history.push('/index');
           });

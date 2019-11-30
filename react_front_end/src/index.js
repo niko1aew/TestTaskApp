@@ -5,9 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 
+const apiServerUrl = 'http://localhost:1623/api/bids/';
+
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <App serverUrl={apiServerUrl} />
   </BrowserRouter>,
 
   document.getElementById('root')

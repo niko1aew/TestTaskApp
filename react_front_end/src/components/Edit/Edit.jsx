@@ -39,10 +39,7 @@ export default class Edit extends Component {
         bid={this.state.currentBidData}
         ServerActionCallback={data => {
           axios
-            .put(
-              'http://localhost:1623/api/bids/' + this.props.match.params.id,
-              data
-            )
+            .put(this.props.serverUrl + this.props.match.params.id, data)
             .then(res => {
               console.log(res.data);
               this.props.history.push('/index');
