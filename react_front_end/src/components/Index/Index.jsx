@@ -28,6 +28,7 @@ export default class Index extends Component {
   }
   tabRow() {
     return this.state.bids.map(function(bid, i) {
+      bid.BidDate = new Date(bid.BidDate).toLocaleDateString();
       return <TableRow bid={bid} key={i} />;
     });
   }
