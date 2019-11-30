@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 export default class BidForm extends Component {
   constructor(props) {
     super(props);
+
     this.onChangeBidName = this.onChangeBidName.bind(this);
     this.onChangeOrganizationName = this.onChangeOrganizationName.bind(this);
     this.onChangeUserName = this.onChangeUserName.bind(this);
@@ -16,7 +17,8 @@ export default class BidForm extends Component {
         organization_name: props.bid.organization_name,
         user_name: props.bid.user_name,
         user_position: props.bid.user_position,
-        e_mail: props.bid.e_mail
+        e_mail: props.bid.e_mail,
+        formValid: true
       };
     } else {
       this.state = {
@@ -25,10 +27,12 @@ export default class BidForm extends Component {
         organization_name: '',
         user_name: '',
         user_position: '',
-        e_mail: ''
+        e_mail: '',
+        formValid: true
       };
     }
   }
+
   componentDidUpdate(oldProps) {
     const newProps = this.props;
     if (oldProps.bid !== newProps.bid) {
@@ -69,8 +73,26 @@ export default class BidForm extends Component {
       e_mail: e.target.value
     });
   }
+
+  validateBid(bid) {
+    const validEmailRegex = RegExp(
+      /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+    );
+    if (
+      bid.BidNumber.trim() === '' ||
+      bid.OrganizationName.trim() === '' ||
+      bid.UserName.trim() === '' ||
+      bid.UserPosition.trim() === '' ||
+      !validEmailRegex.test(bid.Email)
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
   onSubmit(e) {
     e.preventDefault();
+
     const obj = {
       BidNumber: this.state.bid_name,
       OrganizationName: this.state.organization_name,
@@ -82,19 +104,35 @@ export default class BidForm extends Component {
       obj.BidId = this.state.bid_id;
       obj.BidDate = this.state.bid_date;
     }
-    this.props.ServerActionCallback(obj);
+    if (this.validateBid(obj)) {
+      this.props.ServerActionCallback(obj);
 
-    this.setState({
-      bid_name: '',
-      organization_name: '',
-      user_name: '',
-      user_position: '',
-      e_mail: ''
-    });
-    this.props.history.push('/index');
+      this.setState({
+        bid_name: '',
+        organization_name: '',
+        user_name: '',
+        user_position: '',
+        e_mail: ''
+      });
+
+      this.props.history.push('/index');
+    } else {
+      this.setState({ formValid: false });
+    }
   }
 
   render() {
+    let validationMessage;
+
+    if (this.state.formValid) {
+      validationMessage = <div></div>;
+    } else {
+      validationMessage = (
+        <div style={{ color: 'red', fontSize: 26 }}>
+          E-mail должен быть корретный и поля не должны быть пустыми!
+        </div>
+      );
+    }
     return (
       <div style={{ marginTop: 10 }}>
         <h3 align="center">{this.props.HeaderText}</h3>
@@ -144,6 +182,8 @@ export default class BidForm extends Component {
               onChange={this.onChangeEmail}
             />
           </div>
+          {validationMessage}
+
           <div className="form-group">
             <input
               type="submit"
