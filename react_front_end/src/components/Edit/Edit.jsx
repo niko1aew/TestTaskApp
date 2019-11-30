@@ -41,7 +41,6 @@ export default class Edit extends Component {
           axios
             .put(this.props.serverUrl + this.props.match.params.id, data)
             .then(res => {
-              console.log(res.data);
               this.props.history.push('/index');
             });
         }}

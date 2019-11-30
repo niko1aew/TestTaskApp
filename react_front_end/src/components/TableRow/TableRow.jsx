@@ -11,7 +11,6 @@ class TableRow extends Component {
     axios
       .delete(this.props.serverUrl + this.props.bid.BidId)
       .then(() => {
-        console.log('Deleted');
         this.props.delete(this.props.bid.BidId);
       })
       .catch(err => console.log(err));

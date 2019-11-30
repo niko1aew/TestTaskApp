@@ -10,7 +10,6 @@ export default class Index extends Component {
     axios
       .get(this.props.serverUrl)
       .then(response => {
-        console.log('Fetch data: ', response.data);
         this.setState({ bids: response.data });
       })
       .catch(function(error) {
@@ -22,7 +21,7 @@ export default class Index extends Component {
   }
   delete(id) {
     this.setState(prevState => ({
-      bids: this.state.bids.filter(bid => bid.BidId != id)
+      bids: this.state.bids.filter(bid => bid.BidId !== id)
     }));
   }
   tabRow(delCallback) {
