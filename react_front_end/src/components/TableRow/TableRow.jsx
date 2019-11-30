@@ -10,7 +10,10 @@ class TableRow extends Component {
   delete() {
     axios
       .delete('http://localhost:1623/api/bids/' + this.props.bid.BidId)
-      .then(console.log('Deleted'))
+      .then(() => {
+        console.log('Deleted');
+        this.props.delete(this.props.bid.BidId);
+      })
       .catch(err => console.log(err));
   }
   render() {

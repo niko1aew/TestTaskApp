@@ -43,7 +43,10 @@ export default class Edit extends Component {
               'http://localhost:1623/api/bids/' + this.props.match.params.id,
               data
             )
-            .then(res => console.log(res.data));
+            .then(res => {
+              console.log(res.data);
+              this.props.history.push('/index');
+            });
         }}
       ></BidForm>
     );

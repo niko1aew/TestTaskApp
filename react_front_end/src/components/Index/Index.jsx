@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import TableRow from './../TableRow/TableRow';
-
 export default class Index extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +10,7 @@ export default class Index extends Component {
     axios
       .get('http://localhost:1623/api/bids')
       .then(response => {
-        console.log(response.data);
+        console.log('Fetch data: ', response.data);
         this.setState({ bids: response.data });
       })
       .catch(function(error) {
@@ -21,15 +20,15 @@ export default class Index extends Component {
   componentDidMount() {
     this.fetchData();
   }
-
-  componentDidUpdate() {
-    debugger;
-    // this.fetchData();
+  delete(id) {
+    this.setState(prevState => ({
+      bids: this.state.bids.filter(bid => bid.BidId != id)
+    }));
   }
-  tabRow() {
-    return this.state.bids.map(function(bid, i) {
+  tabRow(delCallback) {
+    return this.state.bids.map((bid, i) => {
       bid.BidDate = new Date(bid.BidDate).toLocaleDateString();
-      return <TableRow bid={bid} key={i} />;
+      return <TableRow delete={delCallback.bind(this)} bid={bid} key={i} />;
     });
   }
 
@@ -49,7 +48,7 @@ export default class Index extends Component {
               <th colSpan="2">Action</th>
             </tr>
           </thead>
-          <tbody>{this.tabRow()}</tbody>
+          <tbody>{this.tabRow(this.delete)}</tbody>
         </table>
       </div>
     );

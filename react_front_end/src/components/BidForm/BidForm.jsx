@@ -36,7 +36,6 @@ export default class BidForm extends Component {
   componentDidUpdate(oldProps) {
     const newProps = this.props;
     if (oldProps.bid !== newProps.bid) {
-      debugger;
       this.setState({
         bid_id: newProps.bid.bid_id,
         bid_date: newProps.bid.bid_date,
@@ -114,8 +113,6 @@ export default class BidForm extends Component {
         user_position: '',
         e_mail: ''
       });
-
-      this.props.history.push('/index');
     } else {
       this.setState({ formValid: false });
     }

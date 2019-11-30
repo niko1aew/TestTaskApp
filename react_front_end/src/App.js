@@ -6,7 +6,7 @@ import Create from './components/Create/Create';
 import Edit from './components/Edit/Edit';
 import Index from './components/Index/Index';
 
-function App() {
+function App(props) {
   return (
     <Router>
       <div className="container">
@@ -30,10 +30,10 @@ function App() {
           </div>
         </nav>
         <Switch>
-          <Route exact path="/create" component={Create} />
-          <Route path="/edit/:id" component={Edit} />
-          <Route path="/index" component={Index} />
-          <Route path="/" component={Index} />
+          <Route exact path="/create" render={props => <Create {...props} />} />
+          <Route path="/edit/:id" render={props => <Edit {...props} />} />
+          <Route path="/index" render={props => <Index {...props} />} />
+          <Route path="/" render={props => <Index {...props} />} />
         </Switch>
       </div>
     </Router>
